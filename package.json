@@ -1,0 +1,14 @@
+{
+  "name": "sharp-crested-weir-slides",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Slides authored in Markdown with Marp and deployed to GitHub Pages.",
+  "scripts": {
+    "build": "mkdir -p dist && marp slides/index.md --html -o dist/index.html",
+    "watch": "marp slides/index.md --server --html",
+    "pdf": "mkdir -p dist && marp slides/index.md --pdf -o dist/slides.pdf"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.2.3"
+  }
+}
