@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 320.57 223.47">
+  <!-- Generator: Adobe Illustrator 29.5.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 141)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4, .st5 {
+        fill: none;
+      }
+
+      .st1, .st2, .st3, .st4, .st5 {
+        stroke: #231f20;
+        stroke-linejoin: round;
+      }
+
+      .st1, .st2, .st5 {
+        stroke-linecap: round;
+        stroke-width: .75px;
+      }
+
+      .st2 {
+        stroke-dasharray: 5.9 2.21;
+      }
+
+      .st6 {
+        font-size: 6.5px;
+      }
+
+      .st6, .st7, .st8 {
+        fill: #231f20;
+      }
+
+      .st6, .st9, .st8 {
+        isolation: isolate;
+      }
+
+      .st6, .st8 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .st7, .st10 {
+        fill-rule: evenodd;
+      }
+
+      .st11 {
+        clip-path: url(#clippath-1);
+      }
+
+      .st12 {
+        clip-path: url(#clippath-3);
+      }
+
+      .st13 {
+        clip-path: url(#clippath-2);
+      }
+
+      .st3 {
+        stroke-width: 1.5px;
+      }
+
+      .st4 {
+        stroke-width: 1.25px;
+      }
+
+      .st14, .st10 {
+        fill: #3371af;
+      }
+
+      .st5 {
+        stroke-dasharray: 0 1.47;
+      }
+
+      .st8 {
+        font-size: 8px;
+      }
+
+      .st15 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="st0" x="4.38" y="2.22" width="313.53" height="218.45"/>
+    </clipPath>
+    <clipPath id="clippath-1">
+      <rect class="st0" x="4.38" y="2.22" width="313.53" height="218.45"/>
+    </clipPath>
+    <clipPath id="clippath-2">
+      <rect class="st0" x="4.38" y="2.22" width="313.53" height="218.45"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <rect class="st0" y="0" width="320.57" height="223.47"/>
+    </clipPath>
+  </defs>
+  <g class="st15">
+    <line class="st3" x1="4.73" y1="191.99" x2="317.91" y2="191.99"/>
+  </g>
+  <polyline class="st10" points="188.87 100.2 188.87 116.43 194.02 116.43"/>
+  <rect class="st14" x="188.87" y="116.43" width="5.15" height="75.62"/>
+  <g class="st11">
+    <path class="st4" d="M257.5,165h53.98M192.7,165h51.18M80.29,30H4.73M80.65,30.25h2.7c86.28,0,160.06,56.74,174.71,134.4M188.87,100.41c4.08-3.42,8.27-5.15,12.5-5.15,16.12,0,31.53,25.46,42.3,70.06"/>
+  </g>
+  <line class="st5" x1="101.93" y1="100.2" x2="15.49" y2="100.2"/>
+  <path class="st1" d="M28.2,184.95l3.52,7.04,3.57-7.04M35.29,107.3l-3.57-7.04-3.52,7.04M31.72,100.2v91.79M28.2,93.16l3.52,7.09,3.57-7.09M35.29,37.09l-3.57-7.04-3.52,7.04M31.72,30v70.21"/>
+  <line class="st5" x1="96.52" y1="30" x2="263.93" y2="30"/>
+  <path class="st1" d="M139.68,73.21l25.56,4.23M191.88,37.09l-3.52-7.04-3.57,7.04M184.79,55.36l3.57,7.04,3.52-7.04M188.31,62.4V30"/>
+  <polyline class="st7" points="164.53 80.97 172.14 78.62 165.71 73.98"/>
+  <path class="st1" d="M182.75,138.27l5.61-5.66-7.86-1.07M172.08,138.01l16.22-5.41M213.47,107.3l-3.57-7.04-3.52,7.04M209.89,121.84v-21.64"/>
+  <g class="st13">
+    <line class="st2" x1="4.73" y1="19.23" x2="101.93" y2="19.23"/>
+  </g>
+  <path class="st1" d="M28.2,12.19l3.52,7.04,3.57-7.04M31.72,3v16.23"/>
+  <g class="st9">
+    <text class="st8" transform="translate(19.97 67.04)"><tspan x="0" y="0">h</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st6" transform="translate(24.42 69.54)"><tspan x="0" y="0">0</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(19.97 142.66)"><tspan x="0" y="0">p</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(200.25 47.45)"><tspan x="0" y="0">Drawdown</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(146.22 67.04)"><tspan x="0" y="0">Q</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(200.25 133.83)"><tspan x="0" y="0">Nappe</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(157.04 150.06)"><tspan x="0" y="0">Weir</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(157.04 159.55)"><tspan x="0" y="0">plate</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(14.63 209.45)"><tspan x="0" y="0">Approach</tspan></text>
+  </g>
+  <g class="st12">
+    <g class="st9">
+      <text class="st8" transform="translate(19.07 218.95)"><tspan x="0" y="0">section</tspan></text>
+    </g>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(38.25 12.67)"><tspan x="0" y="0">V</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st6" transform="translate(43.59 15.17)"><tspan x="0" y="0">0</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st6" transform="translate(47.2 9.67)"><tspan x="0" y="0">2</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(50.81 12.67)"><tspan x="0" y="0">/2</tspan></text>
+  </g>
+  <g class="st9">
+    <text class="st8" transform="translate(57.49 12.67)"><tspan x="0" y="0">g</tspan></text>
+  </g>
+</svg>

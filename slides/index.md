@@ -31,6 +31,15 @@ Markdown slides powered by Marp.
 
 ---
 
+## Sharp-Crested Weir Diagram
+
+![bg right:45% w:500px](./sharp_crested_weir.svg)
+
+- Value 1
+- Value 2
+
+---
+
 ## Next Step
 
 Edit `slides/index.md`, push to `main`, and your slides will be published on GitHub Pages.
