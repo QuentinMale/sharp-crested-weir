@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Slides authored in Markdown with Marp and deployed to GitHub Pages.",
   "scripts": {
-    "build": "mkdir -p dist && marp slides/index.md --html -o dist/index.html",
+    "build": "mkdir -p dist && marp slides/index.md --html -o dist/index.html && cp -f slides/*.{svg,png,jpg,jpeg,gif,webp,pdf} dist/ 2>/dev/null || true",
     "watch": "marp slides/index.md --server --html",
     "pdf": "mkdir -p dist && marp slides/index.md --pdf -o dist/slides.pdf"
   },
