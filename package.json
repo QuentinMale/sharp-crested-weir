@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "description": "Slides authored in Markdown with Marp and deployed to GitHub Pages.",
   "scripts": {
-    "build": "mkdir -p dist && marp slides/index.md --html -o dist/index.html && cp -f slides/*.{svg,png,jpg,jpeg,gif,webp,pdf} dist/ 2>/dev/null || true",
-    "watch": "marp slides/index.md --server --html",
-    "pdf": "mkdir -p dist && marp slides/index.md --pdf -o dist/slides.pdf"
+    "build": "mkdir -p dist && marp --allow-local-files slides/index.md --html -o dist/index.html && rm -rf dist/figures && if [ -d slides/figures ]; then cp -R slides/figures dist/figures; fi",
+    "watch": "marp --allow-local-files --server slides --html",
+    "pdf": "mkdir -p dist && marp --allow-local-files slides/index.md --pdf -o dist/slides.pdf"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^4.2.3"

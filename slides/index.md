@@ -33,7 +33,7 @@ Markdown slides powered by Marp.
 
 ## Sharp-Crested Weir Diagram
 
-![bg right:45% w:500px](./sharp_crested_weir.svg)
+![bg right:45% w:500px](./figures/sharp_crested_weir.svg)
 
 - Value 1
 - Value 2
