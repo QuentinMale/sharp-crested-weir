@@ -3,6 +3,7 @@ marp: true
 title: Sharp-Crested Weir
 paginate: true
 theme: default
+math: mathjax
 ---
 
 # Sharp-Crested Weir
@@ -37,6 +38,16 @@ Markdown slides powered by Marp.
 
 - Value 1
 - Value 2
+
+---
+
+## Bernoulli Principle
+
+$$
+\frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
+$$
+
+
 
 ---
 
