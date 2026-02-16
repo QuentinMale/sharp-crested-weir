@@ -60,3 +60,11 @@ q^\prime = 2/3 \sqrt{2g} \,h_0^{3/2}
 }
 $$
 
+---
+
+## Weir-discharge equation
+
+![bg right:50% w:500px](./figures/sharp_crested_weir.svg)
+
+![left:50% w:500px](./figures/q_exp_vs_H.svg)
+
