@@ -68,3 +68,7 @@ $$
 
 ![left:50% w:500px](./figures/q_exp_vs_H.svg)
 
+Where does the difference come from?
+
+<!-- _style: "section::after { font-size: 0.45em; font-style: italic; }" -->
+<!-- _footer: "*Arvanaghi, H., Nasehi Oskuei, N. 2013. Sharp-Crested Weir Discharge Coefficient. J. Civil Eng. Urban, 3(3): 87-91.*" -->

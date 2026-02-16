@@ -3,7 +3,8 @@ from pathlib import Path
 import argparse
 import csv
 import math
-
+import matplotlib as mpl
+mpl.use("Agg")
 import matplotlib.pyplot as plt
 
 
@@ -45,7 +46,7 @@ def main():
         markerfacecolor="none",
         linestyle="None",
         color="k",
-        label=r"Exp. ($p=0.01$ m)",
+        label=r"Exp. ($p=0.1$ m)",
     )
     plt.plot(
         h_m,
@@ -64,7 +65,6 @@ def main():
         format="svg",
         bbox_inches="tight",
     )
-    plt.show()
 
 
 if __name__ == "__main__":
