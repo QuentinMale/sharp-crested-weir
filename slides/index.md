@@ -62,13 +62,13 @@ $$
 
 ---
 
-## Weir-discharge equation
+## Corrected weir equation
 
-![bg right:50% w:500px](./figures/sharp_crested_weir.svg)
+$$
+\boxed{
+q = \underbrace{C_d}_\text{discharge coefficient} \, 2/3 \sqrt{2g} \, h_0^{3/2}
+}
+$$
 
-![left:50% w:500px](./figures/q_exp_vs_H.svg)
-
-Where does the difference come from?
-
-<!-- _style: "section::after { font-size: 0.45em; font-style: italic; }" -->
-<!-- _footer: "*Arvanaghi, H., Nasehi Oskuei, N. 2013. Sharp-Crested Weir Discharge Coefficient. J. Civil Eng. Urban, 3(3): 87-91.*" -->
+Interpretation: $C_d = q / q^\prime$ (real/ideal) is a correction factor.
+Incorporate: viscous friction losses, upstream velocity head, and contraction.
