@@ -6,51 +6,57 @@ theme: default
 math: mathjax
 ---
 
-# Sharp-Crested Weir
+# Models and Approximate Solutions for Open-Channel Flows: Application to a Free Sharp-crested Weir
 
-Markdown slides powered by Marp.
 
----
-
-## Why Marp?
-
-- Write slides in plain Markdown
-- Keep content versioned in Git
-- Export to HTML/PDF
-- Publish automatically with GitHub Actions
 
 ---
 
-## Project Structure
+## Rectangular sharp-crested weir
 
-```text
-.
-├── slides/index.md
-├── package.json
-└── .github/workflows/deploy-slides.yml
-```
+![bg right:44% w:520px](./figures/Rectangular-weir-picture.jpg)
 
----
+Application: Irrigation canals & water distribution
+- No moving parts
+- Converts an easy measurement (water level) into flow rate
 
-## Sharp-Crested Weir Diagram
-
-![bg right:45% w:500px](./figures/sharp_crested_weir.svg)
-
-- Value 1
-- Value 2
 
 ---
 
-## Bernoulli Principle
+## Question to answer today
+
+Given a certain water level, what is the water flow rate?
+
+---
+
+## Bernoulli principle (energy budget)
+
+- Inviscid (no friction)
+- Steady state
+- Incompressible
+- Along a streamline
 
 $$
-\frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
+\boxed{
+\underbrace{p/\rho}_{\text{pressure work}}
++ \underbrace{{v^2}/{2}}_{\text{kinetic energy}}
++ \underbrace{g z}_{\text{potential energy}}
+= \text{constant}
+}
 $$
-
-
 
 ---
 
-## Next Step
+## Weir-discharge equation
 
-Edit `slides/index.md`, push to `main`, and your slides will be published on GitHub Pages.
+![bg right:50% w:500px](./figures/sharp_crested_weir.svg)
+
+- Contraction is neglected
+- $V_0 \approx 0$
+
+$$
+\boxed{
+q^\prime = 2/3 \sqrt{2g} \,h_0^{3/2}
+}
+$$
+
