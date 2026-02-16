@@ -12,7 +12,9 @@ style: |
 
 # Models and Approximate Solutions for Open-Channel Flows: Application to a Free Sharp-crested Weir
 
+https://github.com/QuentinMale/sharp-crested-weir
 
+Slide deck available at https://quentinmale.github.io/sharp-crested-weir
 
 ---
 
