@@ -30,7 +30,7 @@ double weir_x = 1.0;
 double weir_thickness = 0.01;
 double H_up = 0.55;     // fixed upstream depth (water level)
 double h_down_init = 0.3; //0.08;
-double x_res = 0.35;    // width of enforced reservoir region
+double x_res = 0.10;    // width of enforced reservoir region
 double damp = 8.0;      // velocity damping rate [1/s]
 
 // Numerical controls
@@ -39,9 +39,10 @@ int maxlevel = 9;
 double t_end = 6.0;
 double dt_output = 0.01;
 
+vertex scalar phi[];
+
 // Build the sharp-crested weir as an embedded solid.
 static void build_weir_geometry (void) {
-  vertex scalar phi[];
   foreach_vertex() {
     // Finite-height rectangular plate:
     // weir_x <= x <= weir_x + weir_thickness and 0 <= y <= crest_height
@@ -114,6 +115,8 @@ event init (t = 0) {
 
   // Initial free surface: higher upstream pool and lower downstream pool.
   fraction (f, x < weir_x ? (H_up - y) : (h_down_init - y));
+  foreach()
+    f[] = min (f[], cs[]);
 
   boundary ({f, u.x, u.y});
 }
@@ -186,7 +189,7 @@ event snapshot (t += 1.0) {
 event xdmf_output (t += 0.1) {
   char prefix[80];
   sprintf (prefix, "output/weir-%06.3f", t);
-  output_xdmf (t, (scalar *){f, p}, (vector *){u}, NULL, prefix);
+  output_xdmf (t, (scalar *){f, p, cs, phi}, (vector *){u}, NULL, prefix);
 }
 
 event stop (t = t_end) {
