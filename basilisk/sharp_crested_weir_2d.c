@@ -134,7 +134,7 @@ event enforce_reservoir (i++)
 }
 
 event adapt (i++) {
-  adapt_wavelet ({f, u.x, u.y}, (double[]){1e-3, 3e-3, 3e-3},
+  adapt_wavelet ({f, cs, u.x, u.y}, (double[]){1e-3, 3e-3, 3e-3},
                  maxlevel, minlevel);
 }
 
@@ -188,7 +188,8 @@ event snapshot (t += 1.0) {
 
 event xdmf_output (t += 0.1) {
   char prefix[80];
-  sprintf (prefix, "output/weir-%06.3f", t);
+  int tid = (int) (t*1e3);
+  sprintf (prefix, "output/weir-%06d", tid);
   output_xdmf (t, (scalar *){f, p, cs, phi}, (vector *){u}, NULL, prefix);
 }
 
