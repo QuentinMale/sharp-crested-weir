@@ -5,6 +5,8 @@
 #include "reduced.h"
 #include "tension.h"
 #include "navier-stokes/perfs.h"
+#include "output_xdmf.h"
+#include <stdlib.h>
 
 /*
   2D sharp-crested weir case (water-air) in Basilisk.
@@ -97,6 +99,8 @@ u.n[embed] = dirichlet(0.0);
 u.t[embed] = dirichlet(0.0);
 
 event init (t = 0) {
+  system ("mkdir -p output");
+
   // Keep a rectangular physical domain while using quadtree (square) grid.
 #if !_MPI
   mask (y > channel_height ? top : none);
@@ -157,7 +161,7 @@ event logfile (t += dt_output) {
 
   static FILE * fp = NULL;
   if (!fp) {
-    fp = fopen ("weir_timeseries.csv", "w");
+    fp = fopen ("output/weir_timeseries.csv", "w");
     fprintf (fp, "t,h_up,q,h_over_p\n");
   }
   fprintf (fp, "%g,%g,%g,%g\n", t, h_head, q, h_over_p);
@@ -173,12 +177,20 @@ event monitor (i += 20) {
              i, t, dt, grid->tn, mgp.i, mgpf.i, mgu.i, perf.speed);
 }
 
-event snapshot (t += 0.1) {
+event snapshot (t += 1.0) {
   char name[80];
-  sprintf (name, "dump-%06.3f", t);
+  sprintf (name, "output/dump-%06.3f", t);
   dump (file = name);
 }
 
+event xdmf_output (t += 0.1) {
+  char prefix[80];
+  sprintf (prefix, "output/weir-%06.3f", t);
+  output_xdmf (t, (scalar *){f, p}, (vector *){u}, NULL, prefix);
+}
+
 event stop (t = t_end) {
-  dump (file = "dump-final");
+  dump (file = "output/dump-final");
+  if (pid() == 0)
+    system ("test -f perfs && mv -f perfs output/perfs");
 }

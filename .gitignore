@@ -1,2 +1,9 @@
 node_modules/
 dist/
+dump-*
+*.raw
+*.xdmf2
+perfs
+sharp_crested_weir_2d_mpi
+_sharp_crested_weir_2d.c
+weir_timeseries.csv
