@@ -1,57 +1,39 @@
-# macOS-friendly Makefile for Basilisk case
-
-BASILISK_SRC = ./basilisk/src
-
 CASE := sharp_crested_weir_2d
-SRC  := $(CASE).c
-BIN_MPI := $(CASE)_mpi
+SERIAL_BIN := weir2d
+MPI_BIN := weir2d_mpi
 MPI_SRC := _$(CASE).c
 
-QCC ?= $(BASILISK_SRC)/qcc
+# Assume Basilisk source tree is at basilisk/basilisk/src from repo root.
+BASILISK ?= $(abspath basilisk/src)
+QCC ?= $(BASILISK)/qcc
 MPICC ?= mpicc
+MPIRUN ?= mpirun
+NP ?= 4
+CFLAGS ?= -O2 -Wall
+BASILISK_INC := -I$(BASILISK)
+OMPI_CFLAGS ?= $(shell $(MPICC) --showme:compile 2>/dev/null)
+OMPI_LDFLAGS ?= $(shell $(MPICC) --showme:link 2>/dev/null)
 
-CFLAGS  ?= -O2 -Wall
-LDFLAGS ?= -lm
-MPI_CPPFLAGS ?= $(if $(BASILISK_SRC),-I$(BASILISK_SRC),)
-MPI_CFLAGS ?= -D_DARWIN_C_SOURCE
+.PHONY: serial mpi mpi-fallback run-serial run-mpi clean
 
-.PHONY: all mpi check check-mpi clean help
+serial:
+	mkdir -p run
+	$(QCC) $(CFLAGS) $(CASE).c -o $(SERIAL_BIN) -lm
 
-all: check check-mpi $(BIN_MPI)
+mpi:
+	mkdir -p run
+	$(QCC) -D_MPI=1 $(CFLAGS) $(OMPI_CFLAGS) $(CASE).c -o $(MPI_BIN) $(OMPI_LDFLAGS) -lm
 
-check:
-	@test -x "$(QCC)" || command -v "$(QCC)" >/dev/null 2>&1 || { \
-	  echo "Error: qcc not found."; \
-	  echo "Tried QCC=$(QCC)"; \
-	  echo "Install Basilisk and/or set BASILISK_SRC, e.g."; \
-	  echo "  export BASILISK_SRC=\$$HOME/basilisk/src"; \
-	  echo "Then run: make"; \
-	  exit 1; \
-	}
+mpi-fallback:
+	mkdir -p run
+	$(QCC) -source -D_MPI=1 $(CASE).c -o $(MPI_SRC)
+	$(MPICC) $(CFLAGS) $(BASILISK_INC) $(MPI_SRC) -o $(MPI_BIN) -lm
 
-check-mpi:
-	@command -v "$(MPICC)" >/dev/null 2>&1 || { \
-	  echo "Error: mpicc not found."; \
-	  echo "Install MPI (e.g. on macOS: brew install open-mpi)."; \
-	  exit 1; \
-	}
+run-serial: serial
+	./$(SERIAL_BIN) > run/out.ppm 2> run/log
 
-$(BIN_MPI): $(SRC)
-	$(QCC) -source -D_MPI=1 "$<"
-	$(MPICC) $(CFLAGS) $(MPI_CFLAGS) $(MPI_CPPFLAGS) "$(MPI_SRC)" -o "$@" $(LDFLAGS)
+run-mpi: mpi
+	$(MPIRUN) -np $(NP) ./$(MPI_BIN) > run/out_mpi.ppm 2> run/log_mpi
 
 clean:
-	rm -f "$(BIN_MPI)" "$(MPI_SRC)"
-
-help:
-	@echo "Targets:"
-	@echo "  make         Build MPI binary $(BIN_MPI)"
-	@echo "  make mpi     Build MPI binary $(BIN_MPI)"
-	@echo "  make clean   Remove generated files"
-	@echo ""
-	@echo "Optional env vars:"
-	@echo "  BASILISK_SRC=/path/to/basilisk/src"
-	@echo "  QCC=/path/to/qcc"
-	@echo "  MPICC=/path/to/mpicc"
-	@echo "  MPI_CPPFLAGS='-I/path/to/basilisk/src'"
-	@echo "  CFLAGS='-O2 -Wall'"
+	rm -f $(SERIAL_BIN) $(MPI_BIN) $(MPI_SRC)

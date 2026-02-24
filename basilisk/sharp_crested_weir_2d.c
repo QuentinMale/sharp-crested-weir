@@ -5,166 +5,162 @@
 #include "reduced.h"
 #include "tension.h"
 #include "navier-stokes/perfs.h"
+#if _MPI
 #include "output_xdmf.h"
+#endif
+#include <math.h>
 #include <stdlib.h>
 
 /*
-  2D sharp-crested weir case (water-air) in Basilisk.
-
-  Geometry:
-  - Bottom at y = 0
-  - Thin vertical weir plate from y = 0 to y = crest_height
-  - Plate spans x in [weir_x, weir_x + weir_thickness]
-
-  Setup:
-  - Upstream and downstream initial depths create a head difference
-  - Gravity drives overflow above the crest
-  - Outputs a time history of upstream head and discharge
+  First 2D VOF case: overflow over a sharp-crested weir plate.
+  Domain is a long channel with an embedded thin wall from bottom up to crest.
 */
 
-// Domain and geometry parameters (SI units)
 double channel_length = 2.4;
 double channel_height = 0.8;
-double crest_height = 0.35;
-double weir_x = 1.0;
-double weir_thickness = 0.01;
-double H_up = 0.55;     // fixed upstream depth (water level)
-double h_down_init = 0.3; //0.08;
-double x_res = 0.10;    // width of enforced reservoir region
-double damp = 8.0;      // velocity damping rate [1/s]
+double crest_height = 0.35625; // 38*Delta on a 256-cell grid
+double weir_x = 1.0125;        // 108*Delta
+double weir_thickness = 0.05625; // 6*Delta
+double weir_base = 0.;
 
-// Numerical controls
-int minlevel = 5;
-int maxlevel = 9;
+double H_up = 0.55;
+double h_down_init = 0.20;
+double U_in = 0.25;
+double T_ramp = 0.5;
+
+int minlevel = 6;
+int maxlevel = 8;
 double t_end = 6.0;
 double dt_output = 0.01;
 
 vertex scalar phi[];
 
-// Build the sharp-crested weir as an embedded solid.
-static void build_weir_geometry (void) {
+static void build_weir_geometry (void)
+{
   foreach_vertex() {
-    // Finite-height rectangular plate:
-    // weir_x <= x <= weir_x + weir_thickness and 0 <= y <= crest_height
-    // Inside solid when all terms are <= 0.
-    double plate_x = fabs(x - (weir_x + 0.5*weir_thickness)) - 0.5*weir_thickness;
+    double plate_x = fabs (x - (weir_x + 0.5*weir_thickness)) - 0.5*weir_thickness;
     double plate_top = y - crest_height;
-    double plate_bottom = -y;
-    phi[] = max(max(plate_x, plate_top), plate_bottom);
+    double plate_bottom = weir_base - y;
+    phi[] = max (max (plate_x, plate_top), plate_bottom);
   }
   fractions (phi, cs, fs);
+  // Remove degenerate cut-cells to avoid severe CFL restrictions.
+  fractions_cleanup (cs, fs);
   boundary ({cs, fs});
 }
 
-int main() {
+int main (void)
+{
   size (channel_length);
-  origin (0.0, 0.0);
-  init_grid (1 << minlevel);
+  origin (0., 0.);
+  N = 1 << maxlevel;
 
-  // Physical properties for water (phase 1) and air (phase 2)
-  rho1 = 1000.0;
+  CFL = 0.4;
+  DT = 1e-3;
+
+  rho1 = 1000.;
   rho2 = 1.2;
-  mu1 = 1.0e-3;
+  mu1 = 1e-3;
   mu2 = 1.8e-5;
-  f.sigma = 0.0; //0.072;
+  f.sigma = 0.072;
 
-  // Gravity
   G.y = -9.81;
+  Z.y = H_up;
 
   run();
 }
 
-// Flow boundaries
-u.n[left] = neumann(0.);
+u.n[left] = dirichlet ((t < T_ramp ? t/T_ramp : 1.)*
+                       U_in*(y < H_up ? 1. - sq(y/H_up - 1.) : 0.));
 u.t[left] = neumann(0.);
-p[left]   = dirichlet(0.);
-pf[left]  = dirichlet(0.);
+p[left]   = neumann(0.);
+pf[left]  = neumann(0.);
+f[left]   = dirichlet (y < H_up);
 
-u.n[bottom] = dirichlet(0.0);
-u.t[bottom] = dirichlet(0.0);
+u.n[bottom] = dirichlet(0.);
+u.t[bottom] = dirichlet(0.);
 
-// Open outflow on the right
-u.n[right] = neumann(0.0);
+u.n[right] = neumann(0.);
 u.t[right] = neumann(0.);
-p[right]   = dirichlet(0.0);
-pf[right]  = dirichlet(0.0);
+p[right]   = dirichlet(0.);
+pf[right]  = dirichlet(0.);
+// Impose downstream tailwater at outlet to prevent domain-wide level drift.
+f[right]   = dirichlet (y < h_down_init);
 
-// Open top (atmospheric)
-u.n[top] = neumann(0.0);
-u.t[top]   = neumann(0.);
-p[top]   = dirichlet(0.0);
-pf[top]  = dirichlet(0.0);
+u.n[top] = neumann(0.);
+u.t[top] = neumann(0.);
+p[top]   = neumann(0.);
+pf[top]  = neumann(0.);
 
-// No-slip at the embedded weir wall
-u.n[embed] = dirichlet(0.0);
-u.t[embed] = dirichlet(0.0);
+u.n[embed] = dirichlet(0.);
+u.t[embed] = dirichlet(0.);
 
-event init (t = 0) {
-  system ("mkdir -p output");
-
-  // Keep a rectangular physical domain while using quadtree (square) grid.
-#if !_MPI
-  mask (y > channel_height ? top : none);
-#endif
+event init (t = 0)
+{
+  system ("mkdir -p run");
 
   build_weir_geometry();
 
-  // Refine around the interface and near the weir at startup.
-  refine ((x > weir_x - 0.3 && x < weir_x + 0.5 && y < H_up + 0.2 &&
-           level < maxlevel));
+  for (scalar s in {u, p, pf})
+    s.third = true;
 
-  // Initial free surface: higher upstream pool and lower downstream pool.
   fraction (f, x < weir_x ? (H_up - y) : (h_down_init - y));
   foreach()
     f[] = min (f[], cs[]);
 
+  foreach() {
+    u.x[] = 0.;
+    u.y[] = 0.;
+  }
+
   boundary ({f, u.x, u.y});
 }
 
-event enforce_reservoir (i++)
+event adapt (i += 5)
 {
-  foreach() if (x < x_res && cs[] > 0.) {
-    // reset to still-water reservoir
-    f[] = (y < H_up) ? 1. : 0.;
-    u.x[] *= exp(-damp*dt);
-    u.y[] *= exp(-damp*dt);
-  }
-  boundary({f});
-  boundary((scalar *){u});
+  if (i < 5)
+    return 0;
+
+  scalar famr[];
+  foreach()
+    // Keep AMR away from embed cut-cells (cs ~ 1 only) to avoid MPI embed refinement assertion.
+    famr[] = (cs[] > 0.999) ? f[] : 0.;
+
+  astats s = adapt_wavelet ({famr},
+                            (double[]){5e-4},
+                            maxlevel, minlevel);
+  build_weir_geometry();
+  foreach()
+    f[] = min (f[], cs[]);
+  boundary ({f, cs, fs, u.x, u.y, famr});
+  if ((s.nf || s.nc) && pid() == 0)
+    fprintf (stderr, "amr i=%d t=%g refined=%d coarsened=%d cells=%ld\n",
+             i, t, s.nf, s.nc, grid->tn);
 }
 
-event adapt (i++) {
-  adapt_wavelet ({f, cs, u.x, u.y}, (double[]){1e-3, 3e-3, 3e-3},
-                 maxlevel, minlevel);
-}
-
-event logfile (t += dt_output) {
-  // Upstream head sample location
+event logfile (t += dt_output)
+{
   const double x_head = weir_x - 0.15;
-  // Discharge sample location downstream of the crest
   const double x_q = weir_x + weir_thickness + 0.05;
-  const double band = 2.0 * L0 / (1 << maxlevel);
+  const double band = 2.0*L0/(1 << maxlevel);
 
-  double area_head = 0.0;
-  double q_int = 0.0;
+  double area_head = 0.;
+  double q_int = 0.;
 
   foreach (reduction(+:area_head) reduction(+:q_int)) {
-    if (fabs(x - x_head) < 0.5*band) {
-      area_head += f[]*dv();
-    }
-    if (fabs(x - x_q) < 0.5*band)
-      q_int += f[]*u.x[]*dv();
+    if (fabs (x - x_head) < 0.5*band)
+      area_head += cs[]*f[]*dv();
+    if (fabs (x - x_q) < 0.5*band)
+      q_int += cs[]*f[]*u.x[]*dv();
   }
 
-  // depth = water area / strip width
   double h_head = area_head/band;
-  // discharge per unit width = volume flux / strip width
   double q = q_int/band;
   double h_over_p = h_head/crest_height;
 
   static FILE * fp = NULL;
   if (!fp) {
-    fp = fopen ("output/weir_timeseries.csv", "w");
+    fp = fopen ("run/weir_timeseries.csv", "w");
     fprintf (fp, "t,h_up,q,h_over_p\n");
   }
   fprintf (fp, "%g,%g,%g,%g\n", t, h_head, q, h_over_p);
@@ -173,28 +169,43 @@ event logfile (t += dt_output) {
   fprintf (stderr, "t=%g h_up=%g q=%g h/p=%g\n", t, h_head, q, h_over_p);
 }
 
-event monitor (i += 20) {
+event monitor (i += 20)
+{
   if (pid() == 0)
     fprintf (stderr,
              "perf i=%d t=%g dt=%g cells=%ld mgp.i=%d mgpf.i=%d mgu.i=%d speed=%g\n",
              i, t, dt, grid->tn, mgp.i, mgpf.i, mgu.i, perf.speed);
 }
 
-event snapshot (t += 1.0) {
+// Enforce a one-way outlet: prevent any backflow entering from the right boundary.
+event outlet_guard (i++)
+{
+  foreach_boundary (right)
+    if (u.x[] < 0.)
+      u.x[] = 0.;
+  boundary ((scalar *){u});
+}
+
+event snapshot (t += 1.0)
+{
   char name[80];
-  sprintf (name, "output/dump-%06.3f", t);
+  sprintf (name, "run/dump-%06.3f", t);
   dump (file = name);
 }
 
-event xdmf_output (t += 0.1) {
+#if _MPI
+event xdmf_output (t += 0.1)
+{
   char prefix[80];
-  int tid = (int) (t*1e3);
-  sprintf (prefix, "output/weir-%06d", tid);
-  output_xdmf (t, (scalar *){f, p, cs, phi}, (vector *){u}, NULL, prefix);
+  int tid = (int) (t*1e3 + 0.5);
+  sprintf (prefix, "run/weir-%06d", tid);
+  output_xdmf (t, (scalar *){f, p, cs}, (vector *){u}, NULL, prefix);
 }
+#endif
 
-event stop (t = t_end) {
-  dump (file = "output/dump-final");
+event stop (t = t_end)
+{
+  dump (file = "run/dump-final");
   if (pid() == 0)
-    system ("test -f perfs && mv -f perfs output/perfs");
+    system ("test -f perfs && mv -f perfs run/perfs");
 }
