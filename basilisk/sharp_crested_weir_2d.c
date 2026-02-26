@@ -58,7 +58,7 @@ int main (void)
   CFL = 0.4;
   DT = 1e-3;
 
-  rho1 = 1000.;
+  rho1 = 10.;
   rho2 = 1.2;
   mu1 = 1e-3;
   mu2 = 1.8e-5;
@@ -72,7 +72,7 @@ int main (void)
 
 u.n[left] = dirichlet ((t < T_ramp ? t/T_ramp : 1.)*
                        U_in*(y < H_up ? 1. - sq(y/H_up - 1.) : 0.));
-u.t[left] = neumann(0.);
+u.t[left] = dirichlet(0.);
 p[left]   = neumann(0.);
 pf[left]  = neumann(0.);
 f[left]   = dirichlet (y < H_up);
@@ -84,8 +84,7 @@ u.n[right] = neumann(0.);
 u.t[right] = neumann(0.);
 p[right]   = dirichlet(0.);
 pf[right]  = dirichlet(0.);
-// Impose downstream tailwater at outlet to prevent domain-wide level drift.
-f[right]   = dirichlet (y < h_down_init);
+f[right]   = neumann(0.);
 
 u.n[top] = neumann(0.);
 u.t[top] = neumann(0.);
@@ -136,6 +135,8 @@ event adapt (i += 5)
   if ((s.nf || s.nc) && pid() == 0)
     fprintf (stderr, "amr i=%d t=%g refined=%d coarsened=%d cells=%ld\n",
              i, t, s.nf, s.nc, grid->tn);
+
+  unrefine(level > minlevel && (x > channel_length*0.9));
 }
 
 event logfile (t += dt_output)

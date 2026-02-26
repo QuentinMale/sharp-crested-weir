@@ -7,3 +7,5 @@ perfs
 sharp_crested_weir_2d_mpi
 _sharp_crested_weir_2d.c
 weir_timeseries.csv
+basilisk/basilisk
+.DS_Store
