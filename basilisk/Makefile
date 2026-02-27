@@ -22,7 +22,7 @@ serial:
 
 mpi:
 	mkdir -p run
-	$(QCC) -D_MPI=1 $(CFLAGS) $(OMPI_CFLAGS) $(CASE).c -o $(MPI_BIN) $(OMPI_LDFLAGS) -lm
+	CC99=$(MPICC) $(QCC) -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions $(CASE).c -o $(MPI_BIN) -lm
 
 mpi-fallback:
 	mkdir -p run

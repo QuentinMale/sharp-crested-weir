@@ -7,9 +7,11 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
       *vname, *xyz_base, *attr_base;
   FILE *file;
   MPI_File mpi_file;
-  const int shift[8][3] = {
-      {0, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0},
-      {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
+  const int shift[4][2] = {
+      {0, 0},
+      {0, 1},
+      {1, 1},
+      {1, 0},
   };
 
   snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
@@ -35,15 +37,15 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
     ncell++;
     if (ncell >= nsize) {
       nsize = 2 * nsize + 1;
-      if ((xyz = realloc(xyz, 8 * 3 * nsize * sizeof *xyz)) == NULL) {
+      if ((xyz = realloc(xyz, 4 * 3 * nsize * sizeof *xyz)) == NULL) {
         fprintf(stderr, "%s:%d: realloc failed\n", __FILE__, __LINE__);
         return 1;
       }
     }
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 4; i++) {
       xyz[j++] = x + Delta * (shift[i][0] - 0.5);
       xyz[j++] = y + Delta * (shift[i][1] - 0.5);
-      xyz[j++] = z + Delta * (shift[i][2] - 0.5);
+      xyz[j++] = 0;
     }
   }
 
@@ -52,8 +54,8 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
     offset = 0;
   MPI_File_open(MPI_COMM_WORLD, xyz_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, 3 * 8 * offset * sizeof *xyz, xyz,
-                        3 * 8 * ncell * sizeof *xyz, MPI_BYTE,
+  MPI_File_write_at_all(mpi_file, 3 * 4 * offset * sizeof *xyz, xyz,
+                        3 * 4 * ncell * sizeof *xyz, MPI_BYTE,
                         MPI_STATUS_IGNORE);
   free(xyz);
   MPI_File_close(&mpi_file);
@@ -72,11 +74,7 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
     for (vector v in vlist) {
       attr[j++] = val(v.x);
       attr[j++] = val(v.y);
-#if dimension > 2
-      attr[j++] = val(v.z);
-#else
-      attr[j++] = 0.;
-#endif
+      attr[j++] = 0;
     }
   }
   assert(j == (nattr + 3 * nvect) * ncell);
@@ -103,7 +101,7 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
             "      <Time\n"
             "          Value=\"%.16e\"/>\n"
             "      <Topology\n"
-            "          TopologyType=\"Hexahedron\"\n"
+            "          TopologyType=\"Quadrilateral\"\n"
             "          Dimensions=\"%ld\"/>\n"
             "      <Geometry>\n"
             "        <DataItem\n"
@@ -112,7 +110,7 @@ static int output_xdmf(double t, scalar *list, vector *vlist,
             "          %s\n"
             "        </DataItem>\n"
             "      </Geometry>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base);
+            t, ncell_total, 4 * ncell_total, xyz_base);
     j = 0;
     for (scalar s in list)
       fprintf(file,
