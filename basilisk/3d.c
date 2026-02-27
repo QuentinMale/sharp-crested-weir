@@ -5,7 +5,7 @@
 #include "reduced.h"
 #include "navier-stokes/conserving.h"
 #include "tension.h"
-#include "output_xdmf.h"
+#include "xdmf3d.h"
 
 /*
   CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions 3d.c
