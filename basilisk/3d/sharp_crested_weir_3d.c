@@ -63,12 +63,12 @@ static double box(double x, double y, double z) {
 }
 
 int main(void) {
-  rho1 = 1;
-  rho2 = 10;
-  mu1 = 1e-5;
-  mu2 = 1e-5;
-  f.sigma = 1e-6;
-  G.y = 1;
+  rho1 = 10.;
+  rho2 = 1.2;
+  mu1 = 1e-3;
+  mu2 = 1.8e-5;
+  f.sigma = 7.2e-2;
+  G.y = -9.81;
   run();
 }
 
