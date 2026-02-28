@@ -97,7 +97,7 @@ event xdmf_output(t += 0.1) {
   char prefix[FILENAME_MAX];
   int tid = (int)(t * 1e3 + 0.5);
   fields_stats();
-  sprintf(prefix, "weir-%06d", tid);
+  sprintf(prefix, "run/weir-%06d", tid);
   output_xdmf(t, {f, p, cs}, {u}, NULL, prefix);
 }
 
