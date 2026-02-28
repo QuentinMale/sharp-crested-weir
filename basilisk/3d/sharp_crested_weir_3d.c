@@ -13,8 +13,10 @@
  */
 enum { walllevel = 4, minlevel = 5, maxlevel = 6 };
 static double t_end = 10;
+static const double u_in = 0.2;
+static const double h_in = 0.28;
 
-static double levelset(double x, double y) { return x < 0.250 && y < 0.75; }
+static double levelset(double x, double y) { return x < 0.250 && y < h_in; }
 static int bulk(double x, double y) { return x < 0.9; }
 static struct Box {
    double x0, x1, y0, y1, z0, z1;
@@ -73,7 +75,16 @@ int main(void) {
 u.n[bottom] = dirichlet(0);
 u.t[bottom] = dirichlet(0);
 
-u.n[right] = neumann(0);
+u.n[left] = dirichlet(y < h_in ? u_in : 0.);
+u.t[left] = dirichlet(0);
+u.r[left] = dirichlet(0);
+p[left] = neumann(0);
+pf[left] = neumann(0);
+f[left] = dirichlet(y < h_in ? 1. : 0.);
+
+u.n[right] = dirichlet(max(0., u.n[]));
+u.t[right] = neumann(0);
+u.r[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
 f[right] = neumann(0);
