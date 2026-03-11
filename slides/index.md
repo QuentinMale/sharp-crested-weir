@@ -31,20 +31,23 @@ Application: Irrigation canals & water distribution
 
 ## Question to answer today
 
-Given a certain water level, what is the water flow rate?
+![bg right:50% w:480px](./figures/sharp_crested_weir_simple.svg)
+
+Given a certain water level $h_0$, what is the water flow rate $Q$?
 
 ---
 
 ## Bernoulli principle (energy budget)
 
-- Inviscid (no friction)
-- Steady state
-- Incompressible
-- Along a streamline
+- Inviscid flow (no viscous dissipation)
+- Steady flow
+- Incompressible fluid
+
+The Bernoulli equation holds along a streamline (everywhere if irrotational):
 
 $$
 \boxed{
-\underbrace{p/\rho}_{\text{pressure work}}
+\underbrace{p/\rho}_{\text{pressure energy}}
 + \underbrace{{v^2}/{2}}_{\text{kinetic energy}}
 + \underbrace{g z}_{\text{potential energy}}
 = \text{constant}
@@ -58,12 +61,17 @@ $$
 ![bg right:50% w:500px](./figures/sharp_crested_weir.svg)
 
 - Contraction is neglected
-- $V_0 \approx 0$
+- $V_0 \approx 0$ ($H=h_0=h$)
 
 $$
 \boxed{
-q^\prime = 2/3 \sqrt{2g} \,h_0^{3/2}
+q^\prime = 2/3 \sqrt{2g} \,h^{3/2}
 }
+$$
+<br>
+
+$$
+q' = Q'/b \quad \text{(ideal discharge per unit width)}
 $$
 
 ---
@@ -72,36 +80,37 @@ $$
 
 $$
 \boxed{
-q = \underbrace{C_d}_\text{discharge coefficient} \, 2/3 \sqrt{2g} \, h_0^{3/2}
+Q = \underbrace{C_d}_\text{discharge coefficient} \, b \, 2/3 \sqrt{2g} \, h^{3/2}
 }
 $$
 
-Interpretation: $C_d = q / q^\prime$ (real/ideal) is a correction factor.
+Interpretation: $C_d = Q / Q^\prime$ (real/ideal) is a correction factor.
 Incorporate: viscous friction losses, upstream velocity head, and contraction.
 
 ---
 
-## How is $C_d$ determined? (1)
+## How is $C_d$ determined?
 
-1. Measure head $h_0$
+1. Measure head $h$
 
-2. Measure discharge $q$
+2. Measure discharge $Q$
 
 3. Compute $C_d$ from the definition
 $$
 C_d
-= \frac{q}{\frac{2}{3}\sqrt{2g}\,h^{3/2}}
+= \frac{Q}{\frac{2}{3} b \sqrt{2g}\,h^{3/2}}
 $$
 
 4. Repeat for many heads and/or geometries
-You now have a set of points and can fit a curve.
+
+You now have a set of points and can fit an empirical correlation.
 
 ---
 
 ## Dimensional analysis (Buckingham $\Pi$ theorem)
 
 $$
-\Pi_1=q/\sqrt{gh^3} \text{ , } \Pi_2 = h/p \text{ , } \Pi_3 = \rho \sqrt{gh^3} / \mu \text{ , } \Pi_4 = \rho g h^2 / \sigma
+\Pi_1=Q/\left(b\sqrt{gh^3}\right) \text{ , } \Pi_2 = h/p \text{ , } \Pi_3 = Re_h = \rho \sqrt{gh^3} / \mu \text{ , } \Pi_4 = We_h = \rho g h^2 / \sigma
 $$
 
 At sufficiently large Reynolds number and Weber number:
@@ -110,6 +119,8 @@ At sufficiently large Reynolds number and Weber number:
 
 $$
 \boxed{
+\Pi_1 = \phi \! \left( \Pi_2 \right) \quad
+\implies
 C_d = \phi \!\left(\frac{h}{p}\right)
 }
 $$
@@ -127,15 +138,17 @@ Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 h/p$
 ## Summary (what to remember)
 
 - The ideal derivation gives the scaling: $q^\prime \propto h^{3/2}$.
-- Real flows deviate because of **losses + contraction + approach effects**.
+- Real flows deviate due to **losses + contraction + approach effects**.
 - $C_d$ is determined by **calibration**:
-  measure $Q$, measure $h$, compute $C_d = q/q^\prime$.
+  measure $Q$, measure $h$, compute $C_d = Q/Q^\prime$.
 - Over practical ranges (high enough $Re_h$), the dominant dependence collapses to
   $C_d = C_d(h/p)$.
 
 ---
 
 ## Exercise
+
+![bg right:50%](./animations/basilisk.mp4)
 
 Build a program with two steps:
 
