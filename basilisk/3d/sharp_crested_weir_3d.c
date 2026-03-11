@@ -11,19 +11,19 @@
   CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions 3d.c
   mpiexec ./a.out
  */
-enum { walllevel = 4, minlevel = 5, maxlevel = 6 };
+enum { walllevel = 4, minlevel = 5, maxlevel = 7 };
 static double t_end = 10;
-static const double u_in = 0.2;
+static const double u_in = 0.1;
 static const double h_in = 0.28;
 
-static double levelset(double x, double y) { return x < 0.250 && y < h_in; }
+static double levelset(double x, double y) { return x < 0.375 && y < h_in; }
 static int bulk(double x, double y) { return x < 0.9; }
 static struct Box {
    double x0, x1, y0, y1, z0, z1;
 } boxes[] =
-  {{0.250, 0.375, 0.000, 0.500, 0.000, 0.250},
-   {0.250, 0.375, 0.000, 0.250, 0.250, 0.750},
-   {0.250, 0.375, 0.000, 0.500, 0.750, 1.000},
+  {{0.375, 0.4375, 0.000, 0.500, 0.000, 0.250},
+   {0.375, 0.4375, 0.000, 0.250, 0.250, 0.750},
+   {0.375, 0.4375, 0.000, 0.500, 0.750, 1.000},
   };
 
 static double box0(struct Box *b, double x, double y, double z)
@@ -75,12 +75,12 @@ int main(void) {
 u.n[bottom] = dirichlet(0);
 u.t[bottom] = dirichlet(0);
 
-u.n[left] = dirichlet(y < h_in ? u_in : 0.);
+u.n[left] = dirichlet(f[] > 0.5 ? u_in : 0.);
 u.t[left] = dirichlet(0);
 u.r[left] = dirichlet(0);
 p[left] = neumann(0);
 pf[left] = neumann(0);
-f[left] = dirichlet(y < h_in ? 1. : 0.);
+f[left] = neumann(0);
 
 u.n[right] = dirichlet(max(0., u.n[]));
 u.t[right] = neumann(0);
@@ -102,6 +102,11 @@ event init(t = 0) {
     u.y[] = 0;
   }
   fraction(f, levelset(x, y));
+}
+
+event adapt(i++) {
+  adapt_wavelet((scalar *){f, u}, (double[]){1e-3, 5e-3, 5e-3, 5e-3}, maxlevel,
+                minlevel);
 }
 
 event xdmf_output(t += 0.1) {
