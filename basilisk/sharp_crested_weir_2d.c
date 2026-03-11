@@ -46,11 +46,12 @@ int main(void) {
 u.n[bottom] = dirichlet(0);
 u.t[bottom] = dirichlet(0);
 
-u.n[left] = dirichlet(y < h_in ? u_in : 0.);
+/* Free inlet: interface height comes from interior; impose u_in only in wetted region */
+u.n[left] = dirichlet(f[] > 0.5 ? u_in : 0.);
 u.t[left] = dirichlet(0);
 p[left] = neumann(0);
 pf[left] = neumann(0);
-f[left] = dirichlet(y < h_in ? 1. : 0.);
+f[left] = neumann(0);
 
 u.n[right] = dirichlet(max(0., u.n[]));
 u.t[right] = neumann(0);
