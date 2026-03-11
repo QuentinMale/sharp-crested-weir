@@ -9,3 +9,4 @@ _sharp_crested_weir_2d.c
 weir_timeseries.csv
 basilisk/basilisk
 .DS_Store
+__pycache__
