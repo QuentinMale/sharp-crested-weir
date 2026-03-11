@@ -1,17 +1,18 @@
 # Derivation of Bernoulli's Equation from Newton's Law (Euler Equation)
 
-This note derives Bernoulli's equation starting from **Newton's second law** applied to an **inviscid (non-viscous) fluid**. The derivation is standard in fluid mechanics and proceeds through **Euler's equation** and an integration along a **streamline**.
+This note derives Bernoulli's equation starting from **Newton's second law** applied to an **inviscid (non-viscous) fluid**. The derivation is standard in fluid mechanics and proceeds through **Euler's equation** and an integration along a **streamline**. A streamline is a curve in a flow field that is everywhere tangent to the instantaneous velocity vector.
 
 ---
 
 ## 1. Assumptions
 
-To obtain the classical Bernoulli equation, we assume:
+To obtain the Bernoulli equation, we assume:
 
 1. **Inviscid flow**: viscosity is negligible (no shear stresses, no dissipation).
 2. **Steady flow**: flow properties do not change with time at a fixed point.
 3. **Incompressible flow**: density $\rho$ is constant.
-4. **Along a streamline**: the result is guaranteed along a streamline (and everywhere if the flow is also irrotational).
+
+The result is guaranteed along a streamline (and everywhere if the flow is also irrotational, i.e. $\nabla \times \mathbf{u}=0$).
 
 ---
 
@@ -20,13 +21,12 @@ To obtain the classical Bernoulli equation, we assume:
 Newton's second law states:
 
 $$
+\boxed{
 \text{(mass)} \times \text{(acceleration)} = \text{sum of forces}
+}
 $$
 
-For a **fluid particle** (an infinitesimal moving fluid element), we write the force balance per unit volume in the flow.
-
-In inviscid flow, the main body and surface forces are:
-
+For a fluid particle (an infinitesimal moving fluid element), we write the force balance per unit volume in the flow. In inviscid flow, the forces are:
 - **Pressure forces** (surface force)
 - **Gravity** (body force)
 
@@ -34,28 +34,69 @@ In inviscid flow, the main body and surface forces are:
 
 ## 3. Euler's Equation Along a Streamline
 
-Let $s$ be the coordinate along a streamline, and let the flow speed along the streamline be $v(s)$.
+A fluid particle moves along a streamline. Let $s(t)$ be the distance traveled along the streamline at time $t$ (i.e. $s$ is a position coordinate along the streamline) and let the flow speed along the streamline be $v(s)$.
 
 ### 3.1 Acceleration along the streamline
 
-In steady flow, the acceleration of a particle comes from spatial changes in velocity (convective acceleration). Using the chain rule:
-
+By definition, the speed along the streamline is the rate of change of the position coordinate:
 $$
-a_s = \frac{Dv}{Dt} = \frac{dv}{ds}\frac{ds}{dt}
+v = \frac{ds}{dt}
 $$
-
-But $\frac{ds}{dt} = v$, so:
-
+Tangential acceleration is the time rate of change of speed:
 $$
-a_s = v\frac{dv}{ds}
+a_s = \frac{dv}{dt}
 $$
+Along the streamline, the speed can be viewed as a function of position along the streamline $v=v(s)$ with $s=s(t)$. By the chain rule:
+$$
+\boxed{
+a_s = \frac{dv}{dt} = \frac{dv}{ds} \frac{ds}{dt} = v \frac{dv}{ds} = \frac{1}{2} \frac{d v^2}{ds}
+}
+$$
+$dv/ds$ tells you how quickly speed changes as you move along the streamline. $v$ tells you how quickly you move along the streamline. $v dv/ds$ gives how quickly speed changes in time.
 
 ### 3.2 Forces along the streamline
 
-- Pressure force per unit volume along $s$: $-\frac{dp}{ds}$
-- Gravity component along $s$: $-\rho g \frac{dz}{ds}$
+#### Pressure force
 
-(Here $z$ is elevation, and $g$ is gravitational acceleration.)
+Consider a tiny fluid slice of cross section $A$, length along streamline $ds$, volume $A ds$. The pressure at the upstream face is $p$, at the downstream face $p+dp$. Pressure acts inward normal to surfaces:
+- Upstream face, force pushing forward: $F_{p,1} = p A$
+- Downstream face, force pushing backward: $F_{p,2} = (p+dp) A$
+
+The net pressure force is
+$$
+F_{p} = pA - (p+dp)A = -A dp
+$$
+Dividing by the volume $dV=Ads$ we have the pressure force per unit volume along $s$:
+$$
+\boxed{
+\frac{F_p}{dV}
+=
+\frac{-A\,dp}{A\,ds}
+=
+-\frac{dp}{ds}
+}
+$$
+
+#### Gravity force
+
+Consider a small fluid element of mass $\rho dV$. The total gravity force is
+$$
+\mathbf{F}_g = \rho dV \mathbf{g}
+$$
+with $\mathbf{g} = - g \hat{\mathbf{z}}$. Let $\hat{\mathbf t}$ be the unit tangent to the streamline. $\hat{\mathbf z}\cdot\hat{\mathbf t}$ is the vertical component of the tangent vector, it means how fast the elevation changes as you move along the streamline. Therefore
+$$
+\hat{\mathbf z}\cdot\hat{\mathbf t} = \frac{dz}{ds}
+$$
+Hence, we have
+$$
+\mathbf{F}_g \cdot \hat{\mathbf t} = \rho dV \mathbf{g} \cdot\hat{\mathbf t} = - \rho dV g \hat{\mathbf{z}} \cdot\hat{\mathbf t} = - \rho dV g \frac{dz}{ds}
+$$
+and therefore the gravity force per unit volume along $s$ is
+$$
+\boxed{
+\frac{\mathbf{F}_g \cdot \hat{\mathbf t}}{ dV} = -\rho g \frac{dz}{ds}
+}
+$$
 
 ### 3.3 Newton's law per unit volume
 
@@ -66,87 +107,48 @@ $$
 Substitute:
 
 $$
-\rho v\frac{dv}{ds} = -\frac{dp}{ds} - \rho g\frac{dz}{ds}
+\rho \frac{1}{2} \frac{dv^2}{ds} = -\frac{dp}{ds} - \rho g\frac{dz}{ds}
 $$
 
 Rearrange:
 
 $$
-\frac{dp}{ds} + \rho g\frac{dz}{ds} + \rho v\frac{dv}{ds} = 0
+\frac{dp}{ds} + \rho g\frac{dz}{ds} + \rho \frac{1}{2} \frac{dv^2}{ds} = 0
 $$
 
 This is **Euler's equation along a streamline**.
 
 ---
 
-## 4. Convert to Differential Form
+## 4. Integration Along a Streamline
 
-Multiply through by $ds$:
-
+Since $\rho$ is constant (incompressible fluid) we can write
 $$
-dp + \rho g\,dz + \rho v\,dv = 0
+\frac{d}{ds} \left( p \right) + \frac{d}{ds} \left( \rho g z \right) + \frac{d}{ds} \left( \rho \frac{v^2}{2}  \right) 
+= \frac{d}{ds} \left( p + \rho g z + \rho \frac{v^2}{2}  \right)
+= 0
 $$
-
-Divide by $\rho$ (constant for incompressible flow):
-
+and therefore, by integrating along a streamline
 $$
-\frac{dp}{\rho} + g\,dz + v\,dv = 0
-$$
-
-Recognize:
-
-- $v\,dv = d\left(\frac{v^2}{2}\right)$
-
-So:
-
-$$
-\frac{dp}{\rho} + g\,dz + d\left(\frac{v^2}{2}\right) = 0
+\boxed{
+ p + \rho g z + \rho \frac{v^2}{2} = \text{constant along a streamline}
+}
 $$
 
----
+This is the **Bernoulli equation for incompressible, steady, inviscid flow** in **energy per unit volume**  $[J/m^3]$.
 
-## 5. Integrate Along a Streamline
-
-Integrate between two points (1 and 2) along the streamline:
-
+The Bernoulli equation in energy per unit mass $[J/kg]$ reads
 $$
-\int_1^2 \frac{dp}{\rho} + \int_1^2 g\,dz + \int_1^2 d\left(\frac{v^2}{2}\right) = 0
+\frac{p}{\rho} + \frac{v^2}{2} + gz = \text{constant}
 $$
-
-For constant $\rho$ and constant $g$:
-
+and the Bernoulli equation in energy per unit height $[m]$ reads
 $$
-\frac{p_2 - p_1}{\rho} + g(z_2 - z_1) + \left(\frac{v_2^2}{2} - \frac{v_1^2}{2}\right) = 0
+\frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}
 $$
-
-Rearrange:
-
-$$
-\boxed{\frac{p}{\rho} + \frac{v^2}{2} + gz = \text{constant along a streamline}}
-$$
-
-This is **Bernoulli's equation** in **energy per unit mass** units $[J/kg]$.
-
----
-
-## 6. "Head" Form (Energy per Unit Weight)
-
-Divide by $g$:
-
-$$
-\boxed{\frac{p}{\rho g} + \frac{v^2}{2g} + z = \text{constant}}
-$$
-
-Each term now has units of **meters** and is interpreted as a **head**:
-- $p/(\rho g)$: pressure head
-- $v^2/(2g)$: velocity head
-- $z$: elevation head
-
----
 
 ## 7. Notes on Validity
 
-### 7.1 Streamline vs everywhere
+### 7.1 Streamline
 - For steady, inviscid flow: Bernoulli is constant **along a streamline**.
 - If the flow is also **irrotational** ($\nabla\times\mathbf{u}=0$), then the constant is the same **throughout the flow field**.
 
@@ -163,4 +165,4 @@ $$
 
 ## 8. Summary (One Sentence)
 
-Bernoulli's equation comes from applying Newton's second law to an inviscid fluid particle (Euler's equation) and integrating the resulting force balance along a streamline, giving conservation of mechanical energy per unit mass (or per unit weight).
+Bernoulli's equation comes from applying Newton's second law to an inviscid fluid particle (Euler's equation) and integrating the resulting force balance along a streamline, giving conservation of mechanical energy per unit volume (or per unit mass/height).
