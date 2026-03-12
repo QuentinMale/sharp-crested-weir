@@ -12,8 +12,8 @@ static double t_end = 30;
 
 static int bulk(double x, double y) { return x < 0.9; }
 
-static const double w_x0 = 0.5, w_x1 = 0.51;
-static const double w_y0 = 0.0, w_y1 = 0.250;
+static const double w_x0 = 0.5, w_x1 = w_x0 + 1 * 0.03125;
+static const double w_y0 = 0.0, w_y1 = 0.0 + 8 * 0.03125;
 static const double u_in = 0.2;
 static const double h_in = 0.28;
 static double box(double x, double y) {
