@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Slides authored in Markdown with Marp and deployed to GitHub Pages.",
   "scripts": {
-    "build": "mkdir -p dist && marp --allow-local-files --math mathjax slides/index.md --html -o dist/index.html && rm -rf dist/figures && if [ -d slides/figures ]; then cp -R slides/figures dist/figures; fi",
+    "build": "mkdir -p dist && marp --allow-local-files --math mathjax slides/index.md --html -o dist/index.html && rm -rf dist/figures dist/animations && if [ -d slides/figures ]; then cp -R slides/figures dist/figures; fi && if [ -d slides/animations ]; then cp -R slides/animations dist/animations; fi",
     "watch": "marp --allow-local-files --math mathjax --server slides --html",
     "pdf": "mkdir -p dist && marp --allow-local-files --math mathjax slides/index.md --pdf -o dist/slides.pdf"
   },
