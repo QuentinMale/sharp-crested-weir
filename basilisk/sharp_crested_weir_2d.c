@@ -43,8 +43,12 @@ int main(void) {
   run();
 }
 
-u.n[bottom] = dirichlet(0);
+/* Bottom: wall upstream of weir, outlet downstream (x > w_x1). Outward normal
+   points downward, so outflow has u.n < 0; use min(0, u.n[]) to allow drain. */
+u.n[bottom] = dirichlet(x > w_x1 ? min(0., u.n[]) : 0.);
 u.t[bottom] = dirichlet(0);
+p[bottom]  = dirichlet(x > w_x1 ? 0. : p[]);
+pf[bottom] = dirichlet(x > w_x1 ? 0. : pf[]);
 
 /* Free inlet: interface height comes from interior; impose u_in only in wetted region */
 u.n[left] = dirichlet(f[] > 0.5 ? u_in : 0.);
