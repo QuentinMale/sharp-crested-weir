@@ -1,5 +1,6 @@
 ---
 marp: true
+html: true
 title: Sharp-Crested Weir
 paginate: true
 theme: default
@@ -131,7 +132,7 @@ $$
 
 ![w:500px](./figures/cd_vs_h_over_p.svg)
 
-Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 h/p$
+Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 \, h/p$
 
 ---
 
@@ -148,14 +149,13 @@ Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 h/p$
 
 ## Exercise
 
-![bg right:50%](./animations/basilisk.mp4)
+![bg right:45% w:500px](./animations/basilisk.gif)
 
-Build a program with two steps:
+1. Run the code in the basilisk folder to get $q=f(h/p)$.
 
-1. Fit a linear discharge coefficient law given experimental data points.
+2. Fit a linear discharge coefficient law given the data points
    $$
-   C_d = a+b(h/p)
+   C_d = c_1 + c_2 \, h/p
    $$
 
-
-2. Given $h$ and $b$, find the crest height $p$ to achieve a certain flow rate.
+3. Given $h$, find the crest height $p$ to achieve a certain flow rate.

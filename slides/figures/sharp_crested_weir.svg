@@ -31,14 +31,6 @@
         fill: #231f20;
       }
 
-      .st11, .st9, .st10 {
-        font-family: Helvetica, Helvetica;
-      }
-
-      .st11, .st10 {
-        font-size: 8px;
-      }
-
       .st3 {
         stroke-dasharray: 5.9 2.21;
       }
@@ -47,8 +39,12 @@
         font-size: 6.5px;
       }
 
-      .st9, .st12, .st10 {
+      .st9, .st11, .st12, .st10 {
         isolation: isolate;
+      }
+
+      .st9, .st12, .st10 {
+        font-family: Helvetica, Helvetica;
       }
 
       .st4 {
@@ -68,6 +64,10 @@
         clip-path: url(#clippath-2);
       }
 
+      .st12, .st10 {
+        font-size: 8px;
+      }
+
       .st5 {
         stroke-width: 1.5px;
       }
@@ -76,7 +76,7 @@
         stroke-width: 1.25px;
       }
 
-      .st16, .st17 {
+      .st16 {
         fill: #3371af;
       }
 
@@ -85,10 +85,6 @@
       }
 
       .st17 {
-        fill-rule: evenodd;
-      }
-
-      .st18 {
         clip-path: url(#clippath);
       }
     </style>
@@ -102,14 +98,13 @@
       <rect class="st0" x="4.38" y="2.22" width="313.53" height="218.45"/>
     </clipPath>
     <clipPath id="clippath-3">
-      <rect class="st0" y="0" width="320.57" height="223.47"/>
+      <rect class="st0" width="320.57" height="223.47"/>
     </clipPath>
   </defs>
-  <g class="st18">
+  <g class="st17">
     <line class="st5" x1="4.73" y1="191.99" x2="244.5" y2="191.99"/>
   </g>
-  <polyline class="st17" points="188.87 100.2 188.87 116.43 194.02 116.43"/>
-  <rect class="st16" x="188.87" y="116.43" width="5.15" height="75.62"/>
+  <rect class="st16" x="188.87" y="100.88" width="5.15" height="91.17"/>
   <g class="st13">
     <path class="st6" d="M80.29,30H4.73M80.65,30.25h2.7c86.28,0,116.92.67,161.15,36.79M188.87,100.41c11.99-9.88,29.69-6.96,55.63,10.61"/>
   </g>
@@ -121,71 +116,97 @@
     <line class="st3" x1="4.73" y1="19.23" x2="101.93" y2="19.23"/>
   </g>
   <path class="st1" d="M28.2,12.19l3.52,7.04,3.57-7.04M31.72,3v16.23"/>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(35.97 67.04)"><tspan x="0" y="0">h</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st9" transform="translate(40.42 69.54)"><tspan x="0" y="0">0</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(35.97 142.66)"><tspan x="0" y="0">p</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(210.25 135.83)"><tspan x="0" y="0">Nappe</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(157.04 150.06)"><tspan x="0" y="0">Weir</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(157.04 159.55)"><tspan x="0" y="0">plate</tspan></text>
-    </g>
-  </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(14.63 209.45)"><tspan x="0" y="0">Approach</tspan></text>
-    </g>
-  </g>
-  <g class="st14">
-    <g class="st12">
-      <g class="st12">
-        <text class="st10" transform="translate(19.07 218.95)"><tspan x="0" y="0">section</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(35.97 67.04)"><tspan x="0" y="0">h</tspan></text>
       </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(38.25 12.67)"><tspan x="0" y="0">V</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st9" transform="translate(40.42 69.54)"><tspan x="0" y="0">0</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st9" transform="translate(43.59 15.17)"><tspan x="0" y="0">0</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(35.97 142.66)"><tspan x="0" y="0">p</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st9" transform="translate(47.2 9.67)"><tspan x="0" y="0">2</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(210.25 135.83)"><tspan x="0" y="0">Nappe</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(50.81 12.67)"><tspan x="0" y="0">/2</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(157.04 150.06)"><tspan x="0" y="0">Weir</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(57.49 12.67)"><tspan x="0" y="0">g</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(157.04 159.55)"><tspan x="0" y="0">plate</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(14.63 209.45)"><tspan x="0" y="0">Approach</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st14">
+    <g class="st11">
+      <g class="st11">
+        <g class="st11">
+          <text class="st10" transform="translate(19.07 218.95)"><tspan x="0" y="0">section</tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(38.25 12.67)"><tspan x="0" y="0">V</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st9" transform="translate(43.59 15.17)"><tspan x="0" y="0">0</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st9" transform="translate(47.2 9.67)"><tspan x="0" y="0">2</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(50.81 12.67)"><tspan x="0" y="0">/2</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(57.49 12.67)"><tspan x="0" y="0">g</tspan></text>
+      </g>
     </g>
   </g>
   <line class="st2" x1="6.03" y1="99.24" x2="9.6" y2="91.23"/>
@@ -193,25 +214,33 @@
   <line class="st2" x1="6.03" y1="19.96" x2="2.51" y2="27.91"/>
   <line class="st2" x1="9.6" y1="27.91" x2="6.03" y2="19.96"/>
   <line class="st2" x1="6.03" y1="19.9" x2="6.03" y2="99.19"/>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(8.03 63.97)"><tspan x="0" y="0">H</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(8.03 63.97)"><tspan x="0" y="0">H</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(177.64 209.75)"><tspan x="0" y="0">Critical</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(177.64 209.75)"><tspan x="0" y="0">Critical</tspan></text>
+      </g>
     </g>
   </g>
-  <g class="st12">
-    <g class="st12">
-      <text class="st10" transform="translate(177.08 219.25)"><tspan x="0" y="0">section</tspan></text>
+  <g class="st11">
+    <g class="st11">
+      <g class="st11">
+        <text class="st10" transform="translate(177.08 219.25)"><tspan x="0" y="0">section</tspan></text>
+      </g>
     </g>
   </g>
   <g>
     <line class="st4" x1="204.32" y1="93.21" x2="204.32" y2="44.61"/>
-    <path class="st8" d="M206.72,89.79c-.12-.07-.27-.04-.35.08l-2.05,3.23-2.05-3.23c-.07-.12-.23-.15-.35-.08s-.15.23-.08.35l2.27,3.56c.05.07.13.12.21.12s.17-.04.21-.12l2.27-3.56s.04-.09.04-.13c0-.08-.04-.16-.12-.21Z"/>
-    <path class="st8" d="M206.72,48.03c-.12.07-.27.04-.35-.08l-2.05-3.23-2.05,3.23c-.07.12-.23.15-.35.08s-.15-.23-.08-.35l2.27-3.56c.05-.07.13-.12.21-.12s.17.04.21.12l2.27,3.56s.04.09.04.13c0,.08-.04.16-.12.21Z"/>
+    <path class="st8" d="M206.72,89.79c-.12-.07-.27-.04-.35.08l-2.05,3.23-2.05-3.23c-.07-.12-.23-.15-.35-.08s-.15.23-.08.35l2.27,3.56c.05.07.13.12.21.12s.17-.04.21-.12l2.27-3.56s.04-.09.04-.13c0-.08-.04-.16-.12-.21h0Z"/>
+    <path class="st8" d="M206.72,48.03c-.12.07-.27.04-.35-.08l-2.05-3.23-2.05,3.23c-.07.12-.23.15-.35.08s-.15-.23-.08-.35l2.27-3.56c.05-.07.13-.12.21-.12s.17.04.21.12l2.27,3.56s.04.09.04.13c0,.08-.04.16-.12.21h0Z"/>
   </g>
-  <text class="st11" transform="translate(206 74)"><tspan x="0" y="0">t</tspan></text>
+  <g class="st11">
+    <text class="st12" transform="translate(206 74)"><tspan x="0" y="0">t</tspan></text>
+  </g>
 </svg>
