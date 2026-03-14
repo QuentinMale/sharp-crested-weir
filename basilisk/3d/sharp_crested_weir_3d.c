@@ -100,6 +100,7 @@ event init(t = 0) {
   foreach () {
     u.x[] = 0;
     u.y[] = 0;
+    u.z[] = 0;
   }
   fraction(f, levelset(x, y));
 }
