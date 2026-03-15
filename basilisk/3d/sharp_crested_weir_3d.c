@@ -6,6 +6,7 @@
 #include "navier-stokes/conserving.h"
 #include "tension.h"
 #include "xdmf3d.h"
+#include <stdlib.h>
 
 /*
   CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions 3d.c
@@ -89,10 +90,29 @@ p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
 f[right] = neumann(0);
 
+/* z boundaries: outlet (like right) downstream of weir (x > 0.4375), no-through-flow otherwise */
+u.n[front] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
+u.t[front] = neumann(0);
+u.r[front] = neumann(0);
+p[front] = dirichlet(0);
+pf[front] = dirichlet(0);
+f[front] = neumann(0);
+
+u.n[back] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
+u.t[back] = neumann(0);
+u.r[back] = neumann(0);
+p[back] = dirichlet(0);
+pf[back] = dirichlet(0);
+f[back] = neumann(0);
+
 u.n[embed] = dirichlet(0);
 u.t[embed] = dirichlet(0);
 
 event init(t = 0) {
+  /* Restart from checkpoint if RESTORE is set (e.g. RESTORE=run/checkpoint-000050). */
+  const char *restore_file = getenv("RESTORE");
+  if (restore_file && restore(file = restore_file))
+    return 0;
   init_grid(1 << walllevel);
   refine(bulk(x, y) && level < minlevel);
   refine( 0 < box(x, y, z) && box(x, y, z) < 0.025 && level < maxlevel);
@@ -110,12 +130,20 @@ event adapt(i++) {
                 minlevel);
 }
 
-event xdmf_output(t += 0.1) {
+event xdmf_output(t += 0.01) {
   char prefix[FILENAME_MAX];
   int tid = (int)(t * 1e3 + 0.5);
   fields_stats();
-  sprintf(prefix, "run/weir-%06d", tid);
+  sprintf(prefix, "output/weir-%06d", tid);
   output_xdmf(t, {f, p, cs}, {u}, NULL, prefix);
+}
+
+/* Checkpoint every 0.1 s for restart (restore with restore(file="run/checkpoint-XXXXXX")). */
+event checkpoint(t += 0.1) {
+  char name[FILENAME_MAX];
+  int cid = (int)(t * 10.0 + 0.5);
+  sprintf(name, "checkpoints/checkpoint-%06d", cid);
+  dump(file = name);
 }
 
 event end(t = t_end) {}
