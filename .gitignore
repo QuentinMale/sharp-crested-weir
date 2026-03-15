@@ -10,3 +10,4 @@ weir_timeseries.csv
 basilisk/basilisk
 .DS_Store
 __pycache__
+slurm_*
