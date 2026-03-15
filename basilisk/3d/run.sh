@@ -20,6 +20,6 @@ CC99=mpicc ./qcc -D_GNU_SOURCE -D_MPI=1 -DJACOBI -O2 -disable-dimensions sharp_c
 export OMPI_MCA_coll_hcoll_enable=0
 export OMPI_MCA_coll=^hcoll,ml
 
-#export RESTORE=run/checkpoint-000050
+#export RESTORE=checkpoints/checkpoint-000010
 
 srun -u --mpi pmix exec
