@@ -90,19 +90,19 @@ p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
 f[right] = neumann(0);
 
-/* z boundaries: outlet (like right) downstream of weir (x > 0.4375), no-through-flow otherwise */
+/* z boundaries: outlet (like right) downstream of weir (x > 0.4375), slip-wall otherwise */
 u.n[front] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
 u.t[front] = neumann(0);
 u.r[front] = neumann(0);
-p[front] = dirichlet(0);
-pf[front] = dirichlet(0);
+p[front] = x > 0.4375 ? dirichlet(0) : neumann(0);
+pf[front] = x > 0.4375 ? dirichlet(0) : neumann(0);
 f[front] = neumann(0);
 
 u.n[back] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
 u.t[back] = neumann(0);
 u.r[back] = neumann(0);
-p[back] = dirichlet(0);
-pf[back] = dirichlet(0);
+p[back] = x > 0.4375 ? dirichlet(0) : neumann(0);
+pf[back] = x > 0.4375 ? dirichlet(0) : neumann(0);
 f[back] = neumann(0);
 
 u.n[embed] = dirichlet(0);
