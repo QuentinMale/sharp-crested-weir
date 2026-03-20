@@ -11,8 +11,9 @@
 /*
   CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions sharp_crested_weir_3d.c
   or
-  CC99=mpicc qcc -D_GNU_SOURCE -D_MPI=1 -O2 -disable-dimensions sharp_crested_weir_3d.c
-  mpiexec ./a.out
+  module load gcc openmpi
+  CC99=mpicc qcc -D_GNU_SOURCE -D_MPI=1 -O2 -disable-dimensions sharp_crested_weir_3d.c -lm
+  sbatch -n 8 -N 1 -t 3- --mem 32Gb --wrap 'srun ./a.out'
  */
 enum { walllevel = 4, minlevel = 5, maxlevel = 7 };
 static double t_end = 10;
