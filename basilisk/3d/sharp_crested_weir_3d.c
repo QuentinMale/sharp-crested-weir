@@ -9,7 +9,9 @@
 #include <stdlib.h>
 
 /*
-  CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions 3d.c
+  CC99=mpicc qcc -D_DARWIN_C_SOURCE -D_MPI=1 -O2 -disable-dimensions sharp_crested_weir_3d.c
+  or
+  CC99=mpicc qcc -D_GNU_SOURCE -D_MPI=1 -O2 -disable-dimensions sharp_crested_weir_3d.c
   mpiexec ./a.out
  */
 enum { walllevel = 4, minlevel = 5, maxlevel = 7 };
@@ -132,6 +134,7 @@ event log (i++) {
 event adapt(i++) {
   adapt_wavelet((scalar *){f, u}, (double[]){1e-3, 5e-3, 5e-3, 5e-3}, maxlevel,
                 minlevel);
+  unrefine(!(x < X0 + 0.9 * L0) && level > walllevel);
 }
 
 event xdmf_output(t += 0.01) {
