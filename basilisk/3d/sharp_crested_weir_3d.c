@@ -90,29 +90,17 @@ p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
 f[right] = neumann(0);
 
-/* z boundaries: outlet (like right) downstream of weir (x > 0.4375), slip-wall otherwise */
-u.n[front] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
-u.t[front] = neumann(0);
-u.r[front] = neumann(0);
-p[front] = x > 0.4375 ? dirichlet(0) : neumann(0);
-pf[front] = x > 0.4375 ? dirichlet(0) : neumann(0);
-f[front] = neumann(0);
-
-u.n[back] = dirichlet(x > 0.4375 ? max(0., u.n[]) : 0.);
-u.t[back] = neumann(0);
-u.r[back] = neumann(0);
-p[back] = x > 0.4375 ? dirichlet(0) : neumann(0);
-pf[back] = x > 0.4375 ? dirichlet(0) : neumann(0);
-f[back] = neumann(0);
-
 u.n[embed] = dirichlet(0);
 u.t[embed] = dirichlet(0);
 
 event init(t = 0) {
   /* Restart from checkpoint if RESTORE is set (e.g. RESTORE=run/checkpoint-000050). */
   const char *restore_file = getenv("RESTORE");
-  if (restore_file && restore(file = restore_file))
+  if (restore_file && restore(file = restore_file)) {
+    fprintf (ferr, "Restarted from checkpoint: %s\n", restore_file);
+    fflush (ferr);
     return 0;
+  }
   init_grid(1 << walllevel);
   refine(bulk(x, y) && level < minlevel);
   refine( 0 < box(x, y, z) && box(x, y, z) < 0.025 && level < maxlevel);
@@ -123,6 +111,22 @@ event init(t = 0) {
     u.z[] = 0;
   }
   fraction(f, levelset(x, y));
+}
+
+/* Log ite, dt, vmin, vmax to stdout every iteration (only rank 0 in MPI). */
+event log (i++) {
+  double vmin = 1e100, vmax = -1e100;
+  foreach (reduction(min:vmin) reduction(max:vmax))
+    if (cs[] > 0.) {
+      double v = sqrt(sq(u.x[]) + sq(u.y[]) + sq(u.z[]));
+      if (v < vmin) vmin = v;
+      if (v > vmax) vmax = v;
+    }
+  if (vmax < 0.) vmin = vmax = 0.;  // no fluid cells
+  if (pid() == 0) {
+    fprintf (stdout, "ite %d dt %.6e vmin %.6e vmax %.6e\n", i, dt, vmin, vmax);
+    fflush (stdout);
+  }
 }
 
 event adapt(i++) {
