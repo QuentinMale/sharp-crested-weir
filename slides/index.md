@@ -149,7 +149,7 @@ Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 \, h/p$
 
 ## Exercise
 
-![bg right:45% w:500px](./animations/basilisk.gif)
+![bg right:45% w:500px](./animations/basilisk_3d.gif)
 
 1. Run the code in the basilisk folder to get $q=f(h/p)$.
 
