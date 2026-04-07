@@ -1,4 +1,4 @@
-## Bernoulli's Principle
+## Bernoulli's principle
 
 * Newton's second law to a fluid particle moving along a streamline
 
@@ -51,3 +51,11 @@ $$
 $$
 q^\prime = \int_0^{h_0}\sqrt{2g\,(h_0-y)}\,dy = \frac{2}{3}\sqrt{2g}\,h_0^{3/2}
 $$
+
+## Pi theorem
+
+* Variables that influence the problem: $Q, \, h, \, p, \, g, \, \rho, \, \mu, \, \sigma$ (7)
+
+* Fundamental dimensions: [M], [L], [T] (3)
+
+* Number of dimensionless groups = number of variables - number of fundamental dimensions = 4
