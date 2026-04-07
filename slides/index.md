@@ -151,11 +151,11 @@ Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 \, h/p$
 
 ![bg right:45% w:500px](./animations/basilisk_3d.gif)
 
-1. Run the code in the basilisk folder to get $q=f(h/p)$.
+1. Run the code in the basilisk folder to get $Q=f(h/p)$.
 
 2. Fit a linear discharge coefficient law given the data points
    $$
    C_d = c_1 + c_2 \, h/p
    $$
 
-3. Given $h$, find the crest height $p$ to achieve a certain flow rate.
+3. Given $p$, find the water level $h$ to achieve a certain flow rate.
