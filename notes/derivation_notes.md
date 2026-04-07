@@ -32,11 +32,12 @@ $$
 \mathbf{F}_g = \rho dV \mathbf{g} = - \rho dV g \hat{\mathbf{z}}
 $$
 $$
-\frac{\mathbf{F}_g \cdot \hat{\mathbf t}}{dV} = - \rho g \hat{\mathbf{z}} \cdot\hat{\mathbf t} = - \rho g \frac{dz}{ds}
+\frac{\mathbf{F}_g \cdot \hat{\mathbf t}}{dV} = - \rho g \, \hat{\mathbf{z}} \cdot\hat{\mathbf t} = - \rho g \frac{dz}{ds}
 $$
+with $\hat{\mathbf{z}}$ the unit tangent to the streamline. $\hat{\mathbf z}\cdot\hat{\mathbf t}$ is the vertical component of the tangent vector: how fast the elevation changes as you move along the streamline.
 "Gravity depends on slope: it accelerates the flow downhill and slows it uphill."
 
-We therfore have
+We therefore have
 $$
 \rho \frac{1}{2} \frac{d v^2}{ds} = -\frac{dp}{ds}  - \rho g \frac{dz}{ds} 
 $$
