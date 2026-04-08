@@ -148,7 +148,7 @@ $$
 - Real flows deviate due to **losses + contraction + approach effects**.
 - **Correction** $C_d$ determined by calibration:
   measure $Q$, measure $h$, compute $C_d = Q/Q^\prime$.
-- Over practical ranges (high enough $Re_h$), the dominant dependence collapses to
+- Over practical ranges (high enough $Re_h$, $We_h$), the dominant dependence collapses to
   $C_d = C_d(h/p)$.
 
 ---
