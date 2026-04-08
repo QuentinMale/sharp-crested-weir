@@ -144,9 +144,9 @@ $$
 
 ## Summary (what to remember)
 
-- The ideal derivation gives the scaling: $q^\prime \propto h^{3/2}$.
+- Simplified derivation from **first principles**: $q^\prime = 2/3 \sqrt{2g} \,h^{3/2}$.
 - Real flows deviate due to **losses + contraction + approach effects**.
-- $C_d$ is determined by **calibration**:
+- **Correction** $C_d$ determined by calibration:
   measure $Q$, measure $h$, compute $C_d = Q/Q^\prime$.
 - Over practical ranges (high enough $Re_h$), the dominant dependence collapses to
   $C_d = C_d(h/p)$.
