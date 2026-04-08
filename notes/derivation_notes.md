@@ -63,7 +63,7 @@ $$
 v(y) = \sqrt{2 g \left( h_0 - y \right)}
 $$
 
-By integrating the velocity from crest ($y=0$) to free surface ($y=h_0$)
+By integrating the velocity from crest ($y=0$) to free surface ($y=h_0$), neglecting the contraction of the nappe
 $$
 q^\prime = \int_0^{h_0}\sqrt{2g\,(h_0-y)}\,dy = \frac{2}{3}\sqrt{2g}\,h_0^{3/2}
 $$
