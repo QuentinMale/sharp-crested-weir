@@ -114,7 +114,7 @@ $$
 \Pi_1=Q/\left(b\sqrt{gh^3}\right) \text{ , } \Pi_2 = h/p \text{ , } \Pi_3 = Re_h = \rho \sqrt{gh^3} / \mu \text{ , } \Pi_4 = We_h = \rho g h^2 / \sigma
 $$
 
-At sufficiently large Reynolds number and Weber number:
+At sufficiently high Reynolds number and Weber number:
 - $Re_h \gg 1$  $\Rightarrow$ viscous effects are confined to thin boundary layers  
 - $We_h \gg 1$  $\Rightarrow$ surface tension effects are negligible
 
@@ -133,6 +133,12 @@ $$
 ![w:500px](./figures/cd_vs_h_over_p.svg)
 
 Linear fit (Kandaswamy & Rouse, 1957): $C_d = 0.611 + 0.075 \, h/p$
+
+$$
+\boxed{
+Q = \left[ 0.611 + 0.075 \, \left( \frac{h}{p} \right) \right] \frac{2}{3} b \, \sqrt{2g} \, h^{3/2}
+}
+$$
 
 ---
 
